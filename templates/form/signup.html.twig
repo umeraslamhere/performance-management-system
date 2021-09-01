@@ -1,0 +1,13 @@
+{{form_start(form, {'method': 'POST'})}} {# opening form tags with attrs #}
+{# form_row gives us complete control on fields #}
+{{form_row(form.name,{
+    label:'User Name'
+})}}
+{{form_row(form.email)}}
+{{form_row(form.password)}}
+{{form_row(form.phone)}}
+{{form_row(form.role)}}
+{{form_row(form.gender)}}
+{{form_row(form.picture)}}
+{# {{form_widget(form)}} #} {# Actual Form , a shortcut to use intsead of wrting form_row#}
+{{form_end(form)}} {# ending form tags #}

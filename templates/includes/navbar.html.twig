@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
+    <div class="container">
+        <a hr="/" class="navbar-brand">Logo</a>
+        <button class="navbar-toggler" type="button" data-toggler="collapse" data-target="#mobile">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mobile-nav">
+            <ul class="navbar-nav ml-auto ">
+                {% if is_granted('ROLE_USER') %}
+                    <li>
+                        <a href="/dashboard" class="nav-link">Home</a>
+                    </li>
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="admin/signup_requests" class="nav-link">Signup Requests</a>
+                        </li>
+
+                    {% endif %}
+
+                    {# <li>
+                        <a href="/articles" class="nav-link">Articles</a>
+                    </li> #}
+
+                    <li class="float-right">
+                        <a href="{{ path('app_logout') }}" class="nav-link">Logout</a>
+                    </li>
+
+                {% else %}    
+
+                    <li class="float-right">
+                        <a href="{{ path('app_login') }}" class="nav-link">Login</a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+
+</nav>

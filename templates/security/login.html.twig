@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    <p>Testing login.css</p>
+
+    <form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}>Logout</a>
+            {# You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a> #}
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+    <div class="mb-3">
+            
+        
+        <label for="inputPassword">
+            <input type="checkbox" name="_remember_me" id="remember-me"> Remember Me
+        </label>
+    </div>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+    <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+    <p >Forgot password? Click <a href="/request_reset_password">Here</a> to reset your password.</p>
+    <p >Not Registered? Click <a href="/register">Here</a> to get yourself Registered.</p>
+</form>
+
+{% endblock %}

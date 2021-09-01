@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Teams {% endblock %}
+
+{# Body Starts Here #}
+{% block body %} 
+
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <a href="{{ path('create_team')}}" class="btn btn-dark">Create Team</a><hr>
+    {% if teams %}
+        <table id="users_table" class="table table-stripped col-md-812">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-3">Manager</th>
+                    <th class="col-md-1">Member</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in teams %}
+                    <tr>
+                        <td>{{team.name}}</td>
+                        <td>{{team.managerId}}</td>  
+                        <td >{{team.memeberId}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>    
+    {% else %}
+        <p>No Teams to display.</p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

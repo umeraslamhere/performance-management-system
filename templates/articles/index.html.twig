@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %} My App Title Here {% endblock %}
+
+{# Body Starts Here #}
+{% block body %} 
+    <a href="/article/save" class="btn btn-dark">Add Article</a><hr>
+    {% if articles %}
+        <table id="articles_table" class="table table-stripped col-md-8">
+            <thead>
+                <tr>
+                    <th class="col-md-9">Title</th>
+                    <th class="col-md-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{article.title}}</td>
+                        <td>
+                            <a href="/article/{{article.id}}" class="btn btn-dark">Show</a>
+                            <a href="/article/update/{{article.id}}" class="btn btn-primary">Edit</a>
+                            <a href="/article/delete/{{article.id}}" class="btn btn-danger delete-article" data-id="{{article.id}}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>    
+    {% else %}
+        <p>No Articles to display.</p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Dashboard {% endblock %}
+
+{# Body Starts Here #}
+{% block body %} 
+    <h1>Welcome</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{path('all_teams')}}" class="btn btn-dark btn-sm" >Teams</a>
+        <a href="{{path('all_users')}}" class="btn btn-dark btn-sm" >Users</a>
+    {% endif %}
+    <a href="/user/show/{{user.id}}" class="btn btn-dark btn-sm" >My Profile</a>
+
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

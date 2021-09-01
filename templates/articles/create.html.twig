@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %} New Article{% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+
+    {# I've used composer require form to built the form from controller #}
+    
+    {{form_start(form)}} {# opening form tags with attrs #}
+    {{form_widget(form)}} {# Actual Form #}
+    {{form_end(form)}} {# ending form tags #}
+
+    {# or you can use this #}
+    {#  {{ form(form) }} #}
+{% endblock %}
+

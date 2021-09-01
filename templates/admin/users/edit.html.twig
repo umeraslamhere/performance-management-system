@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Update User {% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+
+    {# I've used composer require form to built the form from controller #}
+    
+    {{ include('admin/users/partials/_form.html.twig') }}
+    {# {{ include('users/partials/_form.html.twig' , {
+        button_text:'create' pass variable in this way
+    }) }} #}
+
+
+{% endblock %}
+

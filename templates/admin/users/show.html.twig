@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{user.firstName}} {% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+
+    <h3>{{user.firstName}}</h3>
+    <h5>{{user.email}}</h5>
+    
+    <h4>Roles: </h4>
+    {% for role in user.roles %}
+        <h5>{{role}}</h5>
+    {% endfor %}    
+    <hr>
+    <a href="/request/update/{{user.id}}" class="btn btn-primary">Update</a>
+    <a href="/admin/signup_requests">Go Back</a>
+
+{% endblock %}

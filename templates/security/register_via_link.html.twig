@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    <p>You will need Admin Approval After this.</p>
+    <p>Or You can Signup <a href="/register">directly</a></p>
+    <h1>Signup</h1>
+
+    <form method="post">
+    
+    <h1 class="h3 mb-3 font-weight-normal">Please Signup</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+
+    <div class="mb-3">
+        <label for="inputPassword">
+            <input type="checkbox" name="_terms" id="remember-me"> Agree to terms
+        </label>
+    </div>
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Signup
+    </button>
+    
+    <p>Have an account? Click <a href="{{ path('app_login') }}">Here</a> to login.</p>
+    {# <p>Have an account? Click <a href="/login_1">Here</a> to login.</p> #}
+
+
+</form>
+
+{% endblock %}

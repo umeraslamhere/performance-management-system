@@ -1,0 +1,23 @@
+{{form_start(form, {'method': 'POST'})}} {# opening form tags with attrs #}
+{# form_row gives us complete control on fields #}
+{{form_row(form.firstName,{
+    label:'First Name', 'attr': { 'readonly': 'true' }
+})}}
+{{form_row(form.lastName,{
+    label:'Last Name', 'attr': { 'readonly': 'true' }
+})}}
+{{form_row(form.email , {'attr': { 'readonly': 'true' }})}}
+{{form_row(form.phone , {'attr': { 'readonly': 'true' }})}}
+{{form_row(form.gender , {'attr': { 'disabled': 'true' }})}}
+{{form_row(form.picture , {'attr': { 'readonly': 'true' }})}}
+{{form_end(form)}}
+<br>
+<br>
+
+
+{# <a href="{{ app.request.uri }}?edit=yes" class="btn btn-primary">Edit Your Profile</a> #}
+<a href="/user/update/{{id}}" class="btn btn-primary edit-user" data-id="{{id}}">Edit Your Profile</a>
+
+
+
+
