@@ -40,20 +40,18 @@ class __TwigTemplate_48fee122c1bb99b429c9f93e7abf86548d13001779df2238610951dd0a7
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "email/set_password.html.twig"));
 
         // line 1
-        echo "
-
-
-<!DOCTYPE html>
+        echo "<!DOCTYPE html>
 <html>
     <body>
-        <h3>You did it!</h3>
+        <h3>You did it Man!</h3>
 
-        Hi ! You are only one step away from registration.
-
+        Hi ! You are only one step away from asd registration.
         ";
-        // line 12
+        // line 8
         echo "        To Register, go to: <a href=\"";
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("app_set_password");
+        echo "?email=";
+        echo twig_escape_filter($this->env, (isset($context["email"]) || array_key_exists("email", $context) ? $context["email"] : (function () { throw new RuntimeError('Variable "email" does not exist.', 8, $this->source); })()), "html", null, true);
         echo "\">Complete My Registration</a>.
 
         Thanks!
@@ -79,26 +77,22 @@ class __TwigTemplate_48fee122c1bb99b429c9f93e7abf86548d13001779df2238610951dd0a7
 
     public function getDebugInfo()
     {
-        return array (  55 => 12,  43 => 1,);
+        return array (  51 => 8,  43 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("
-
-
-<!DOCTYPE html>
+        return new Source("<!DOCTYPE html>
 <html>
     <body>
-        <h3>You did it!</h3>
+        <h3>You did it Man!</h3>
 
-        Hi ! You are only one step away from registration.
-
+        Hi ! You are only one step away from asd registration.
         {# example, assuming you have a route named \"login\" #}
-        To Register, go to: <a href=\"{{ url('app_set_password') }}\">Complete My Registration</a>.
+        To Register, go to: <a href=\"{{ url('app_set_password') }}?email={{email}}\">Complete My Registration</a>.
 
         Thanks!
     </body>
-</html>", "email/set_password.html.twig", "/home/coeus/Desktop/performance_management_product/templates/email/set_password.html.twig");
+</html>", "email/set_password.html.twig", "/home/coeus/Desktop/performance-management-system/templates/email/set_password.html.twig");
     }
 }

@@ -42,7 +42,7 @@ class UserController extends AbstractController
      */
     public function show(Request $request, $id)
     {
-        $user = $this->userRepository->findUserById($id);
+        $user = $this->userRepository->findUserBy(['id' => $id]);
         $form = $this->createForm(UserProfileForm::class , $user);
         $form->handleRequest($request);
         
@@ -91,7 +91,7 @@ class UserController extends AbstractController
     public function update(Request $request , $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $this->userRepository->findUserById($id);
+        $user = $this->userRepository->findUserBy(['id' => $id]);
         $form = $this->createForm(UserProfileForm::class  ,$user);
         $form->handleRequest($request);
         

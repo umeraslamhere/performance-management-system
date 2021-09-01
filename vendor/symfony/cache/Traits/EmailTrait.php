@@ -46,7 +46,9 @@ trait EmailTrait
             ->setBody(
                 $this->renderView(
                     // templates/emails/registration.html.twig
-                    'email/set_password.html.twig'
+                    'email/set_password.html.twig', [
+                        'email' => $email,
+                    ]
                 ),
                 'text/html'
             )
@@ -67,7 +69,9 @@ trait EmailTrait
             ->setBody(
                 $this->renderView(
                     // templates/emails/registration.html.twig
-                    'email/reset_password.html.twig'
+                    'email/reset_password.html.twig' , [
+                        'email' => $email,
+                    ]
                 ),
                 'text/html'
             )

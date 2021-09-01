@@ -144,8 +144,13 @@ class __TwigTemplate_b5c3ab16e83c89423986f823c334ad7bfaf6e48cdef083dc1caebb4e6b2
             Reset
         </button>
         
-        <p>Or Go back<a href=\"/login_1\">to login</a>.</p>
-
+        <p>Or Go back<a href=\"";
+        // line 29
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
+        echo "\">to login</a>.</p>
+        ";
+        // line 31
+        echo "
     </form>
 
 ";
@@ -169,7 +174,7 @@ class __TwigTemplate_b5c3ab16e83c89423986f823c334ad7bfaf6e48cdef083dc1caebb4e6b2
 
     public function getDebugInfo()
     {
-        return array (  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
+        return array (  153 => 31,  149 => 29,  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -202,11 +207,12 @@ class __TwigTemplate_b5c3ab16e83c89423986f823c334ad7bfaf6e48cdef083dc1caebb4e6b2
             Reset
         </button>
         
-        <p>Or Go back<a href=\"/login_1\">to login</a>.</p>
+        <p>Or Go back<a href=\"{{ path('app_login') }}\">to login</a>.</p>
+        {# <p>Or Go back<a href=\"/login_1\">to login</a>.</p> #}
 
     </form>
 
 {% endblock %}
-", "security/request_reset_password.html.twig", "/home/coeus/Desktop/performance_management_product/templates/security/request_reset_password.html.twig");
+", "security/request_reset_password.html.twig", "/home/coeus/Desktop/performance-management-system/templates/security/request_reset_password.html.twig");
     }
 }

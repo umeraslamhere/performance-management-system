@@ -136,7 +136,10 @@ class __TwigTemplate_9f66dbc4248523e8cfde87798c5aeb445a803a92ef6b7e862edf826bc9f
    <form method=\"post\">
     
     <h1 class=\"h3 mb-3 font-weight-normal\">Please set your password</h1>
-    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='' class=\"form-control\" required>
+    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='";
+        // line 21
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 21, $this->source); })()), "request", [], "any", false, false, false, 21), "query", [], "any", false, false, false, 21), "get", [0 => "email"], "method", false, false, false, 21), "html", null, true);
+        echo "' class=\"form-control\" >
     <label for=\"inputPassword\">Password</label>
     <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" required>
     <label for=\"inputPassword\">Confirm Password</label>
@@ -147,8 +150,13 @@ class __TwigTemplate_9f66dbc4248523e8cfde87798c5aeb445a803a92ef6b7e862edf826bc9f
             Reset
         </button>
         
-        <p>Or Go back<a href=\"/login_1\">to login</a>.</p>
-
+        <p>Or Go back<a href=\"";
+        // line 32
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
+        echo "\">to login</a>.</p>
+        ";
+        // line 34
+        echo "
     </form>
 
 ";
@@ -172,7 +180,7 @@ class __TwigTemplate_9f66dbc4248523e8cfde87798c5aeb445a803a92ef6b7e862edf826bc9f
 
     public function getDebugInfo()
     {
-        return array (  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
+        return array (  159 => 34,  155 => 32,  141 => 21,  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -197,7 +205,7 @@ class __TwigTemplate_9f66dbc4248523e8cfde87798c5aeb445a803a92ef6b7e862edf826bc9f
    <form method=\"post\">
     
     <h1 class=\"h3 mb-3 font-weight-normal\">Please set your password</h1>
-    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='' class=\"form-control\" required>
+    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='{{  app.request.query.get('email') }}' class=\"form-control\" >
     <label for=\"inputPassword\">Password</label>
     <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" required>
     <label for=\"inputPassword\">Confirm Password</label>
@@ -208,11 +216,12 @@ class __TwigTemplate_9f66dbc4248523e8cfde87798c5aeb445a803a92ef6b7e862edf826bc9f
             Reset
         </button>
         
-        <p>Or Go back<a href=\"/login_1\">to login</a>.</p>
+        <p>Or Go back<a href=\"{{ path('app_login') }}\">to login</a>.</p>
+        {# <p>Or Go back<a href=\"/login_1\">to login</a>.</p> #}
 
     </form>
 
 {% endblock %}
-", "security/reset_password.html.twig", "/home/coeus/Desktop/performance_management_product/templates/security/reset_password.html.twig");
+", "security/reset_password.html.twig", "/home/coeus/Desktop/performance-management-system/templates/security/reset_password.html.twig");
     }
 }
