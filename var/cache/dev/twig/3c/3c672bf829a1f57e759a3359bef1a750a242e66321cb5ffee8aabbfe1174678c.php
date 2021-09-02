@@ -133,10 +133,14 @@ class __TwigTemplate_8390e8e1f83d54558fad913bf031fded3769f209aa4c5cd77e21292d50a
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 17
         echo "    
+
     <form method=\"post\">
     
     <h1 class=\"h3 mb-3 font-weight-normal\">Please set your password</h1>
-    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='' class=\"form-control\" required>
+    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='";
+        // line 22
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 22, $this->source); })()), "request", [], "any", false, false, false, 22), "query", [], "any", false, false, false, 22), "get", [0 => "email"], "method", false, false, false, 22), "html", null, true);
+        echo "' class=\"form-control\" >
     <label for=\"inputPassword\">Password</label>
     <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" required>
     <label for=\"inputPassword\">Confirm Password</label>
@@ -146,8 +150,13 @@ class __TwigTemplate_8390e8e1f83d54558fad913bf031fded3769f209aa4c5cd77e21292d50a
         Signup
     </button>
     
-    <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p>
-
+    <p>Have an account? Click <a href=\"";
+        // line 32
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
+        echo "\">Here</a> to login.</p>
+    ";
+        // line 34
+        echo "
 
 </form>
 
@@ -172,7 +181,7 @@ class __TwigTemplate_8390e8e1f83d54558fad913bf031fded3769f209aa4c5cd77e21292d50a
 
     public function getDebugInfo()
     {
-        return array (  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
+        return array (  159 => 34,  155 => 32,  142 => 22,  135 => 17,  126 => 14,  123 => 13,  119 => 12,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -194,10 +203,11 @@ class __TwigTemplate_8390e8e1f83d54558fad913bf031fded3769f209aa4c5cd77e21292d50a
         </div>
     {% endfor %}
     
+
     <form method=\"post\">
     
     <h1 class=\"h3 mb-3 font-weight-normal\">Please set your password</h1>
-    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='' class=\"form-control\" required>
+    <input type=\"hidden\" name=\"email\" id=\"inputEmail\" value='{{  app.request.query.get('email') }}' class=\"form-control\" >
     <label for=\"inputPassword\">Password</label>
     <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" required>
     <label for=\"inputPassword\">Confirm Password</label>
@@ -207,12 +217,13 @@ class __TwigTemplate_8390e8e1f83d54558fad913bf031fded3769f209aa4c5cd77e21292d50a
         Signup
     </button>
     
-    <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p>
+    <p>Have an account? Click <a href=\"{{ path('app_login') }}\">Here</a> to login.</p>
+    {# <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p> #}
 
 
 </form>
 
 {% endblock %}
-", "security/set_password.html.twig", "/home/coeus/Desktop/performance_management_product/templates/security/set_password.html.twig");
+", "security/set_password.html.twig", "/home/coeus/Desktop/performance-management-system/templates/security/set_password.html.twig");
     }
 }

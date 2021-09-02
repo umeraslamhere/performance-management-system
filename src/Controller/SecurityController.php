@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Security\LoginFormAuthenticator;
 use App\Service\UserService;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,12 @@ class SecurityController extends AbstractController
 {
     use EmailTrait;
     public $session;
+    public $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->session = new Session();
+        $this->userRepository=$userRepository;
     }       
 
     /**
@@ -77,7 +80,6 @@ class SecurityController extends AbstractController
         if($request->isMethod('POST')){
             $this->signup_link($loggerInterface, $swiftMailer , $request->request->get('email'));
             
-            $this->session->set('email', $request->request->get('email'));
 
             
 
@@ -103,21 +105,30 @@ class SecurityController extends AbstractController
     /**
      * @Route("/set_password" , name="app_set_password")
      */
-    public function registerViaLinkSetPassword(Request $request , UserPasswordEncoderInterface $userPasswordEncoderInterface ,GuardAuthenticatorHandler $guardAuthenticatorHandler , LoginFormAuthenticator $loginFormAuthenticator , UserService $userService)
+    public function registerViaLinkSetPassword(Request $request , AuthenticationUtils $authenticationUtils, UserPasswordEncoderInterface $userPasswordEncoderInterface ,GuardAuthenticatorHandler $guardAuthenticatorHandler , LoginFormAuthenticator $loginFormAuthenticator , UserService $userService)
     {
         if($request->isMethod('POST')){
             if($request->request->get('password') === $request->request->get('confirm_password')){
-
-                $user_status = 'approved';
+                
                 $em=$this->getDoctrine()->getManager();
+                $user_status = 'approved';
                 $user = $userService->saveToDatabase($request , $userPasswordEncoderInterface , $user_status , $em);
-                $this->session->clear();
-                return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(
+                $error = $authenticationUtils->getLastAuthenticationError();
+                $lastUsername = $authenticationUtils->getLastUsername();
+    
+                $this->addFlash(
+                    'notice',
+                    'Registered Successfully!'
+                );
+                return $this->redirectToRoute('app_login',array(
+                    'last_username' => $lastUsername, 'error' => $error
+                    ));
+                /* return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
                     $loginFormAuthenticator,
                     'main' //provider key, name of our firewall
-                );
+                ); */
             }else{
                 $this->addFlash(
                     'notice',
@@ -138,7 +149,8 @@ class SecurityController extends AbstractController
     {
         if($request->isMethod('POST')){
             if($request->request->get('password') === $request->request->get('confirm_password')){
-                $user=$this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $this->session->get('email')]);
+                $user = $this->userRepository->findUserBy(['email' => $request->request->get('email')]);
+
                 if($user){
                     $user->setPassword($userPasswordEncoderInterface->encodePassword(
                         $user, $request->request->get('password')
@@ -146,17 +158,18 @@ class SecurityController extends AbstractController
                     $em=$this->getDoctrine()->getManager();
                     $em->persist($user);
                     $em->flush();
-
-                    $this->session->clear();
-        
+                    
+                    
                     $this->addFlash(
                         'notice',
                         'Your Password is reset successfully!'
                     );
                     $lastUsername = $authenticationUtils->getLastUsername();
                     $error = $authenticationUtils->getLastAuthenticationError();
-                    return $this->render('security/login.html.twig' ,['last_username' => $lastUsername, 'error' => $error]);
-
+                    return $this->redirectToRoute('app_login',array(
+                        'last_username' => $lastUsername, 'error' => $error
+                        ));
+                    
                 }else{
                     $this->addFlash(
                         'notice',
@@ -165,6 +178,7 @@ class SecurityController extends AbstractController
                     return $this->render('security/reset_password.html.twig');
                 }
             }else{
+                dd('ok404');
                 $this->addFlash(
                     'notice',
                     'Password does not match with Confirm Password!'

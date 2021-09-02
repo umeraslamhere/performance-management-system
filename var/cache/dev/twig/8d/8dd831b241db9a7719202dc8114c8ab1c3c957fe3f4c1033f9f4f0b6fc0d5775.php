@@ -54,6 +54,8 @@ class __TwigTemplate_9b331446aea3e4b0cfdd62876ab158fdd95791e7ebfe9286b1d607a14ec
         // line 12
         echo "        To Rest your password, go to: <a href=\"";
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("app_reset_password");
+        echo "?email=";
+        echo twig_escape_filter($this->env, (isset($context["email"]) || array_key_exists("email", $context) ? $context["email"] : (function () { throw new RuntimeError('Variable "email" does not exist.', 12, $this->source); })()), "html", null, true);
         echo "\">Reset</a>.
 
         Thanks!
@@ -95,10 +97,10 @@ class __TwigTemplate_9b331446aea3e4b0cfdd62876ab158fdd95791e7ebfe9286b1d607a14ec
         But no worries, we'll reset it for you.
 
         {# example, assuming you have a route named \"login\" #}
-        To Rest your password, go to: <a href=\"{{ url('app_reset_password') }}\">Reset</a>.
+        To Rest your password, go to: <a href=\"{{ url('app_reset_password') }}?email={{email}}\">Reset</a>.
 
         Thanks!
     </body>
-</html>", "email/reset_password.html.twig", "/home/coeus/Desktop/performance_management_product/templates/email/reset_password.html.twig");
+</html>", "email/reset_password.html.twig", "/home/coeus/Desktop/performance-management-system/templates/email/reset_password.html.twig");
     }
 }

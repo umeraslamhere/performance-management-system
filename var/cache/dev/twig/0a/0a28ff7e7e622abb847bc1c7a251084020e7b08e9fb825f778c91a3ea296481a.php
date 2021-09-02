@@ -133,8 +133,13 @@ class __TwigTemplate_b759c96ce1429d2e58c8f7a6369c1cd49d941612d7cb9c39ea221ca263b
         Signup
     </button>
     
-    <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p>
-
+    <p>Have an account? Click <a href=\"";
+        // line 31
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
+        echo "\">Here</a> to login.</p>
+    ";
+        // line 33
+        echo "
 
 </form>
 
@@ -159,7 +164,7 @@ class __TwigTemplate_b759c96ce1429d2e58c8f7a6369c1cd49d941612d7cb9c39ea221ca263b
 
     public function getDebugInfo()
     {
-        return array (  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
+        return array (  142 => 33,  138 => 31,  116 => 11,  106 => 10,  94 => 7,  89 => 6,  79 => 5,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -194,12 +199,13 @@ class __TwigTemplate_b759c96ce1429d2e58c8f7a6369c1cd49d941612d7cb9c39ea221ca263b
         Signup
     </button>
     
-    <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p>
+    <p>Have an account? Click <a href=\"{{ path('app_login') }}\">Here</a> to login.</p>
+    {# <p>Have an account? Click <a href=\"/login_1\">Here</a> to login.</p> #}
 
 
 </form>
 
 {% endblock %}
-", "security/register_via_link.html.twig", "/home/coeus/Desktop/performance_management_product/templates/security/register_via_link.html.twig");
+", "security/register_via_link.html.twig", "/home/coeus/Desktop/performance-management-system/templates/security/register_via_link.html.twig");
     }
 }

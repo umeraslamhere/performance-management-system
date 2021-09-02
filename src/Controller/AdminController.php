@@ -104,7 +104,7 @@ class AdminController extends AbstractController
     public function approve_request($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $this->userRepository->findUserById($id);
+        $user = $this->userRepository->findUserBy(['id' => $id]);
         $user->setStatus('approved');
         $signup_requests=$this->userRepository->findAllUsersBy(['status' => 'pending']);
         
@@ -124,7 +124,7 @@ class AdminController extends AbstractController
      */
     public function show($id)
     {
-        $user=$this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $id]);
+        $user = $this->userRepository->findUserBy(['id' => $id]);
         return $this->render('admin/users/show.html.twig', array('user' => $user));
     }
 
@@ -136,7 +136,7 @@ class AdminController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $user = $this->userRepository->findUserById($id);
+        $user = $this->userRepository->findUserBy(['id' => $id]);
         $form = $this->createForm(UserProfileForm::class , $user);
         $form->handleRequest($request);
 
