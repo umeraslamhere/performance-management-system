@@ -86,12 +86,21 @@ class User implements UserInterface
      */
     private $teams;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Team::class, mappedBy="memberId")
+     * 
+     */
+    private $myteams;
+
+
+
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
         $this->commentsBy = new ArrayCollection();
         $this->commentsOn = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->myteams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -365,5 +374,36 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getMyteams(): Collection
+    {
+        return $this->myteams;
+    }
+
+    public function addMyteam(Team $myteam): self
+    {
+        if (!$this->myteams->contains($myteam)) {
+            $this->myteams[] = $myteam;
+            $myteam->addMemberId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMyteam(Team $myteam): self
+    {
+        if ($this->myteams->removeElement($myteam)) {
+            $myteam->removeMemberId($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->firstName." ".$this->lastName;
     }
 }

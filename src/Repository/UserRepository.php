@@ -45,14 +45,108 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $users=$this->findAll();
         return $users;
     }
+    
     public function findAllUsersBy($options){
         $users=$this->findBy($options);
         return $users;
     }
+
     public function removeUser($id){
-        $user=$this->findUserBy(['id' => $id]);
-        $this->remove($user);
+        $em = $this->getEntityManager();
+        $user = $this->findOneBy(['id' => $id]);
+        $em->remove($user);
+        $em->flush();
     }
+
+    public function myManagers($id){
+
+        /* return $this->getEntityManager()
+        ->createQuery('
+            SELECT user FROM user WHERE user.id IN (SELECT team.manager_id_id
+            FROM team 
+            WHERE team.id IN (SELECT id 
+            FROM team_user 
+            WHERE team_user.user_id ='.$id.'))
+        ')
+        ->getSQL(); */
+
+
+
+
+        /* 
+        GIVES NULL RESULT
+        $rsm = new ResultSetMapping();
+        // build rsm here
+        $em = $this->getEntityManager();
+
+        $query = $em->createNativeQuery('SELECT * FROM user WHERE user.id IN (SELECT team.manager_id_id
+        FROM team 
+           WHERE team.id IN (SELECT id 
+        FROM team_user 
+        WHERE team_user.user_id = id))', $rsm);
+        $query->setParameter('id', $id);
+
+        $users = $query->getResult();
+        dd($users); */
+
+
+        $conn = $this->getEntityManager()
+        ->getConnection();
+        $sql = "SELECT * FROM user WHERE user.id IN (SELECT team.manager_id_id
+        FROM team 
+           WHERE team.id IN (SELECT id 
+        FROM team_user 
+        WHERE team_user.user_id = ?))";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        //dd($stmt->fetchAll());
+        return $stmt->fetchAll();
+
+
+        /* $em = $this->getEntityManager();
+        $expr = $em->getExpressionBuilder();
+        return $em->createQueryBuilder()
+        ->from('user', 'u')
+        ->where(
+            $expr->in(
+                'u.id',
+                $em->createQueryBuilder()
+                    ->select('t.manager_id_id')
+                    ->from('team', 't')
+                    ->where(
+                        $expr->in(
+                            't.id',
+                            $em->createQueryBuilder()
+                                ->select('tuser.user_id')
+                                ->from('team_user', 'tuser')
+                                ->where('tuser.user_id = :id')
+                                ->setParameter('id', $id)
+                                ->getQuery()
+                                ->getResult()
+                        )
+                    )
+            )
+        ); */
+    }
+
+    public function mySubordinates($id){
+        
+        $conn = $this->getEntityManager()
+        ->getConnection();
+        $sql = "SELECT * FROM user WHERE user.id IN (SELECT team_user.user_id
+        FROM team_user 
+        WHERE team_user.team_id IN (SELECT id 
+              FROM team
+              WHERE team.manager_id_id = ?))";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        //dd($stmt->fetchAll());
+        return $stmt->fetchAll();
+    }
+
+    
 
     // /**
     //  * @return User[] Returns an array of User objects
@@ -62,6 +156,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
+        ->select
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)

@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Add Comment {% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+    {{form_start(form, {'method': 'POST'})}} {# opening form tags with attrs #}
+    {# form_row gives us complete control on fields #}
+    {{form_row(form.managerId,{
+        label:'Manager',
+        'attr': { 'readonly': 'true' }
+    })}}
+    {{form_row(form.subordinateId,{
+        label:'Subordinate',
+        'attr': { 'readonly': 'true' }
+    })}}
+    {{form_row(form.content )}}
+    {{form_end(form)}} {# ending form tags #}
+{% endblock %}

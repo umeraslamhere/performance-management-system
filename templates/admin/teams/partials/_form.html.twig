@@ -1,0 +1,30 @@
+{{form_start(form, {'method': 'POST'})}}
+{{form_row(form.name,{
+    label:'Team Name',
+})}}
+{{form_row(form.managerId,{
+    label:'Managers',
+})}}
+{{form_row(form.memberId,{
+    label:'Participants',
+})}}
+{{form_end(form)}}
+
+{#  <form method="post">
+
+    <label for="name">Team Name</label>
+    <input type="text"  name="name" id="name" class="form-control" required autofocus>
+    <label for="manager">Manager</label>
+    <select name="manager" class="form-control mb-2" required>
+        <option>--Select Manager--<option>
+        {% for manager in managers %}
+            <option value={{manager.id}}>{{manager.firstName}} {{manager.lastName}}</option>
+        {% endfor %}
+        <option>2</option>
+    </select>
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Create
+    </button>
+
+</form> #}

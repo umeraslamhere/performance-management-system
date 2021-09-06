@@ -16,7 +16,8 @@ class UserService{
         
         $user = new User();
         $user->setEmail($request->request->get('email'));
-        $user->setFirstName('its req, make it nullable or add field in form');
+        $user->setFirstName('New');
+        $user->setLastName('User');
         $user->setPassword($userPasswordEncoderInterface->encodePassword(
             $user, $request->request->get('password')
         ));

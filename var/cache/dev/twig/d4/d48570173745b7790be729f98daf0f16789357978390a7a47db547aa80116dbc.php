@@ -101,11 +101,30 @@ class __TwigTemplate_2dabbe0f676ef4296938557e40bd7941695d4221a8643b18cffaff83dd1
     ";
         }
         // line 12
-        echo "    <a href=\"/user/show/";
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 12, $this->source); })()), "id", [], "any", false, false, false, 12), "html", null, true);
-        echo "\" class=\"btn btn-dark btn-sm\" >My Profile</a>
-
-    
+        echo "    ";
+        if ((0 !== twig_compare(twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 12, $this->source); })()), "status", [], "any", false, false, false, 12), "pending"))) {
+            // line 13
+            echo "        <a href=\"/user/show/";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 13, $this->source); })()), "id", [], "any", false, false, false, 13), "html", null, true);
+            echo "\" class=\"btn btn-dark btn-sm\" >My Profile</a>
+        ";
+            // line 14
+            if ((0 === twig_compare($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN"), false))) {
+                // line 15
+                echo "            <a href=\"/user/newsfeed/";
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 15, $this->source); })()), "id", [], "any", false, false, false, 15), "html", null, true);
+                echo "\" class=\"btn btn-dark btn-sm\" >My Newsfeed</a>
+        ";
+            }
+            // line 17
+            echo "    ";
+        } else {
+            // line 18
+            echo "        <p>You can access your profile once Admin approves your Signup Request.</p>
+    ";
+        }
+        // line 20
+        echo "
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -115,7 +134,7 @@ class __TwigTemplate_2dabbe0f676ef4296938557e40bd7941695d4221a8643b18cffaff83dd1
 
     }
 
-    // line 17
+    // line 23
     public function block_javascripts($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -125,7 +144,7 @@ class __TwigTemplate_2dabbe0f676ef4296938557e40bd7941695d4221a8643b18cffaff83dd1
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
-        // line 18
+        // line 24
         echo "    <script src=\"/js/main.js\"></script>
 ";
         
@@ -148,7 +167,7 @@ class __TwigTemplate_2dabbe0f676ef4296938557e40bd7941695d4221a8643b18cffaff83dd1
 
     public function getDebugInfo()
     {
-        return array (  129 => 18,  119 => 17,  104 => 12,  99 => 10,  94 => 9,  92 => 8,  79 => 6,  60 => 3,  37 => 1,);
+        return array (  148 => 24,  138 => 23,  127 => 20,  123 => 18,  120 => 17,  114 => 15,  112 => 14,  107 => 13,  104 => 12,  99 => 10,  94 => 9,  92 => 8,  79 => 6,  60 => 3,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -164,14 +183,20 @@ class __TwigTemplate_2dabbe0f676ef4296938557e40bd7941695d4221a8643b18cffaff83dd1
         <a href=\"{{path('all_teams')}}\" class=\"btn btn-dark btn-sm\" >Teams</a>
         <a href=\"{{path('all_users')}}\" class=\"btn btn-dark btn-sm\" >Users</a>
     {% endif %}
-    <a href=\"/user/show/{{user.id}}\" class=\"btn btn-dark btn-sm\" >My Profile</a>
+    {% if user.status != 'pending' %}
+        <a href=\"/user/show/{{user.id}}\" class=\"btn btn-dark btn-sm\" >My Profile</a>
+        {% if is_granted('ROLE_ADMIN') == false %}
+            <a href=\"/user/newsfeed/{{user.id}}\" class=\"btn btn-dark btn-sm\" >My Newsfeed</a>
+        {% endif %}
+    {% else %}
+        <p>You can access your profile once Admin approves your Signup Request.</p>
+    {% endif %}
 
-    
 {% endblock %}
 
 {% block javascripts %}
     <script src=\"/js/main.js\"></script>
 {% endblock %}
-", "dashboard.html.twig", "/home/coeus/Desktop/performance_management_product/templates/dashboard.html.twig");
+", "dashboard.html.twig", "/home/coeus/Desktop/performance-management-system/templates/dashboard.html.twig");
     }
 }

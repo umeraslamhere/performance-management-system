@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Show Team{% endblock %}
+
+{# Body Starts Here #}
+{% block body %} 
+    <h1>Team</h1>
+    <strong>Name: </strong> {{team.name}}
+    <strong>Manager ID: </strong> {{team.managerId}}
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

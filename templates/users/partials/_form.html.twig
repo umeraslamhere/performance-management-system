@@ -14,9 +14,10 @@
 <br>
 <br>
 
-
-{# <a href="{{ app.request.uri }}?edit=yes" class="btn btn-primary">Edit Your Profile</a> #}
-<a href="/user/update/{{id}}" class="btn btn-primary edit-user" data-id="{{id}}">Edit Your Profile</a>
+{% if is_granted('ROLE_PM') %} {# PM is logged in #}
+{% else %}
+    <a href="/user/update/{{id}}" class="btn btn-primary edit-user mb-3" data-id="{{id}}">Edit Your Profile</a>
+{% endif %}
 
 
 

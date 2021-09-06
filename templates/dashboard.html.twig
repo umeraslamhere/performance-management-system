@@ -9,9 +9,15 @@
         <a href="{{path('all_teams')}}" class="btn btn-dark btn-sm" >Teams</a>
         <a href="{{path('all_users')}}" class="btn btn-dark btn-sm" >Users</a>
     {% endif %}
-    <a href="/user/show/{{user.id}}" class="btn btn-dark btn-sm" >My Profile</a>
+    {% if user.status != 'pending' %}
+        <a href="/user/show/{{user.id}}" class="btn btn-dark btn-sm" >My Profile</a>
+        {% if is_granted('ROLE_ADMIN') == false %}
+            <a href="/user/newsfeed/{{user.id}}" class="btn btn-dark btn-sm" >My Newsfeed</a>
+        {% endif %}
+    {% else %}
+        <p>You can access your profile once Admin approves your Signup Request.</p>
+    {% endif %}
 
-    
 {% endblock %}
 
 {% block javascripts %}

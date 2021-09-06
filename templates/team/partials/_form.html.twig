@@ -1,0 +1,11 @@
+{{form_start(form, {'method': 'POST'})}}
+{{form_row(form.name,{
+    label:'Team Name', 'attr': { 'readonly': 'true' }
+})}}
+{{form_row(form.managerId,{
+    label:'Managers', 'attr': { 'readonly': 'true' }
+})}}
+{{form_row(form.memberId,{
+    label:'Participants',
+})}}
+{{form_end(form)}}

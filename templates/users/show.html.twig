@@ -1,6 +1,12 @@
 {% extends "base.html.twig" %}
 
-{% block title %} Update User {% endblock %}
+{% block title %}
+    {% if is_granted('ROLE_PM') %} {# PM is logged in #}
+        Subordinate Details
+    {% else %}
+        Update User
+    {% endif %}  
+{% endblock %}
 
 {# Body Starts Here #}
 {% block body %}
@@ -8,13 +14,48 @@
 
     {# I've used composer require form to built the form from controller #}
 
-    
-    {{ include('users/partials/_form.html.twig') }}
-    {# {{ include('users/partials/_form.html.twig' , {
-        button_text:'create' pass variable in this way
-    }) }} #}
-    <br>
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
 
+    {{ include('users/partials/_form.html.twig') }}
+    <br>
+    {% if is_granted('ROLE_ADMIN') == false %} {# PM is logged in #}
+        {% if is_granted('ROLE_PM') %} {# PM is logged in #}
+            <a href="/comments/addComment/{{user.id}}" class="btn btn-success btn-sm add-comment" data-id="{{user.id}}">Add New Comment</a>
+            <table  class="table table-stripped col-md-12">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Comments</th>
+                        <th class="col-md-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td>{{comment.content}}</td>
+                            <td>
+                                <a href="/comments/deleteComment/{{comment.id}}" class="btn btn-primary btn-sm delete-comment" data-id="{{comment.id}}">Remove</a>
+                                <form name="submit" id="submit" action="/comment/add_feedback/{{comment['id']}}" method="post">
+                                    <label for="one">+ve</label>
+                                    <input type="radio" id="one" disabled name="feedback" value="positive"  {% if comment['feedback']=='positive' %} checked {% endif %}/>
+                                    <label for="two">-ve</label>
+                                    <input type="radio" id="two" disabled name="feedback" value="negative" {% if comment['feedback']=='negative' %} checked {% endif %}/>
+                                    <label for="two">neu</label>
+                                    <input type="radio" id="two" disabled  name="feedback" value="neutral" {% if comment['feedback']=='neutral' %} checked {% endif %} />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>   
+        {% else %}
+            <a href="/user/newsfeed/{{id}}" class="btn btn-primary edit-user" data-id="{{id}}">Newsfeed</a>
+        {% endif %}
+    {% endif %}
 
 {% endblock %}
 

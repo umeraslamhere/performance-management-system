@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'e73b5426b1fc33a7fe53d49706135a8e61fe33e2',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'e73b5426b1fc33a7fe53d49706135a8e61fe33e2',
             'dev_requirement' => false,
         ),
         'behat/transliterator' => array(
@@ -199,6 +199,15 @@
             'reference' => 'c81f18a3efb941d8c4d2e025f6183b5c6d697307',
             'dev_requirement' => false,
         ),
+        'egyg33k/csv-bundle' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../egyg33k/csv-bundle',
+            'aliases' => array(),
+            'reference' => '8ccb7883b20723510d7f29739898f64f4edf77bc',
+            'dev_requirement' => false,
+        ),
         'friendsofphp/proxy-manager-lts' => array(
             'pretty_version' => 'v1.0.5',
             'version' => '1.0.5.0',
@@ -233,6 +242,15 @@
             'install_path' => __DIR__ . '/../laminas/laminas-code',
             'aliases' => array(),
             'reference' => '54251ab2b16c41c6980387839496b235f5f6e10b',
+            'dev_requirement' => false,
+        ),
+        'league/csv' => array(
+            'pretty_version' => '9.7.1',
+            'version' => '9.7.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/csv',
+            'aliases' => array(),
+            'reference' => '0ec57e8264ec92565974ead0d1724cf1026e10c1',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(

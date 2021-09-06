@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Add Member{% endblock %}
+
+{# Body Starts Here #}
+{% block body %} 
+    <h1>Add to Team</h1>
+    
+    {{ include('team/partials/_form.html.twig') }}
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}

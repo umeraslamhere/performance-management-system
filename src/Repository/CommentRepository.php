@@ -18,6 +18,49 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
+    
+    public function getComments($by, $on){
+
+        $conn = $this->getEntityManager()
+        ->getConnection();
+        $sql = "SELECT comment.* FROM comment 
+        JOIN user 
+        WHERE comment.subordinate_id_id=user.id 
+        AND comment.manager_id_id=?
+        AND comment.subordinate_id_id= ?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $by);
+        $stmt->bindValue(2, $on);
+        $stmt->execute();
+        //dd($stmt->fetchAll());
+        return $stmt->fetchAll();
+
+    }
+
+    public function getAllComments($on){
+
+        $conn = $this->getEntityManager()
+        ->getConnection();
+
+        $sql = "SELECT comment.*,user.first_name,user.last_name  FROM comment 
+        JOIN user 
+        WHERE comment.manager_id_id=user.id 
+        AND comment.subordinate_id_id= ?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $on);
+        $stmt->execute();
+        //dd($stmt->fetchAll());
+        return $stmt->fetchAll();
+
+    }
+    
+
+    public function removeComment($id){
+        $em = $this->getEntityManager();
+        $comment = $this->findOneBy(['id' => $id]);
+        $em->remove($comment);
+        $em->flush();
+    }
 
     // /**
     //  * @return Comment[] Returns an array of Comment objects

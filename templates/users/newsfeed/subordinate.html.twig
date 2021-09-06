@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Newsfeed {% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+    
+
+    {# I've used composer require form to built the form from controller #}
+
+    {{user}}
+
+    <table id="users_table" class="table table-stripped col-md-812">
+        <thead>
+            <tr>
+                <th class="col-md-2">Team</th>
+                <th class="col-md-2">Manager</th>
+                <th class="col-md-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in myTeams %}
+                <tr>
+                    <td>{{team['name']}}</td>
+                    <td>{{team['first_name']}} {{team['last_name']}}</td>
+                    <td>
+                    <a href="/managers/comment/{{team['manager_id_id']}}" class="btn btn-dark btn-sm" >Comments</a>
+                    
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <br>
+
+    </table>   
+
+{% endblock %}
+

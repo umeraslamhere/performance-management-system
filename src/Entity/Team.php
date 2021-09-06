@@ -31,7 +31,8 @@ class Team
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="teams")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="myteams")
+     * @ORM\JoinColumn(name="team_user")
      */
     private $memberId;
 
@@ -91,5 +92,9 @@ class Team
         $this->memberId->removeElement($memberId);
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
     }
 }

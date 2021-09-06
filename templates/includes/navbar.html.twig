@@ -14,7 +14,7 @@
                     
                     {% if is_granted('ROLE_ADMIN') %}
                         <li>
-                            <a href="admin/signup_requests" class="nav-link">Signup Requests</a>
+                            <a href="{{ path('signup_requests') }}" class="nav-link">Signup Requests</a>
                         </li>
 
                     {% endif %}

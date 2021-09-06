@@ -32,6 +32,11 @@ class Comment
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="string", length=12, nullable=true)
+     */
+    private $feedback;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Comment
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getFeedback(): ?string
+    {
+        return $this->feedback;
+    }
+
+    public function setFeedback(?string $feedback): self
+    {
+        $this->feedback = $feedback;
 
         return $this;
     }

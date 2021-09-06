@@ -21,6 +21,7 @@ return [
         ],
         '/admin/teams' => [[['_route' => 'all_teams', '_controller' => 'App\\Controller\\AdminController::all_teams'], null, null, null, false, false, null]],
         '/admin/teams/create' => [[['_route' => 'create_team', '_controller' => 'App\\Controller\\AdminController::create_team'], null, null, null, false, false, null]],
+        '/comment' => [[['_route' => 'comment', '_controller' => 'App\\Controller\\CommentController::index'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
         '/register' => [[['_route' => 'app_register', '_controller' => 'App\\Controller\\SecurityController::register'], null, null, null, false, false, null]],
@@ -28,6 +29,7 @@ return [
         '/request_reset_password' => [[['_route' => 'app_request_reset_password', '_controller' => 'App\\Controller\\SecurityController::requestResetPassword'], null, null, null, false, false, null]],
         '/set_password' => [[['_route' => 'app_set_password', '_controller' => 'App\\Controller\\SecurityController::registerViaLinkSetPassword'], null, null, null, false, false, null]],
         '/reset_password' => [[['_route' => 'app_reset_password', '_controller' => 'App\\Controller\\SecurityController::resetPassword'], null, null, null, false, false, null]],
+        '/team' => [[['_route' => 'team', '_controller' => 'App\\Controller\\TeamController::index'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'home', '_controller' => 'App\\Controller\\UserController::home'], null, null, null, false, false, null]],
         '/dashboard' => [[['_route' => 'user_dashboard', '_controller' => 'App\\Controller\\UserController::dashboard'], null, null, null, false, false, null]],
         '/testing_file_uploading' => [[['_route' => 'upload_test', '_controller' => 'App\\Controller\\UserController::temporaryUploadAction'], null, null, null, false, false, null]],
@@ -50,17 +52,35 @@ return [
                         .'|(*:159)'
                     .')'
                 .')'
+                .'|/admin/team/([^/]++)(*:189)'
                 .'|/request/(?'
                     .'|de(?'
-                        .'|cline_request/([^/]++)(*:208)'
-                        .'|tails/([^/]++)(*:230)'
+                        .'|cline_request/([^/]++)(*:236)'
+                        .'|tails/([^/]++)(*:258)'
                     .')'
-                    .'|approve_request/([^/]++)(*:263)'
-                    .'|update/([^/]++)(*:286)'
+                    .'|approve_request/([^/]++)(*:291)'
+                    .'|update/([^/]++)(*:314)'
+                .')'
+                .'|/comment(?'
+                    .'|/add_feedback/([^/]++)(*:356)'
+                    .'|s/(?'
+                        .'|deleteComment/([^/]++)(*:391)'
+                        .'|addComment/([^/]++)(*:418)'
+                    .')'
+                .')'
+                .'|/export\\-comments/([^/]++)(*:454)'
+                .'|/managers/comment/([^/]++)(*:488)'
+                .'|/teams/(?'
+                    .'|details/(?'
+                        .'|([^/]++)(*:525)'
+                        .'|team_member/([^/]++)(*:553)'
+                    .')'
+                    .'|add_team_member/([^/]++)(*:586)'
                 .')'
                 .'|/user/(?'
-                    .'|show/([^/]++)(*:317)'
-                    .'|update/([^/]++)(*:340)'
+                    .'|show/([^/]++)(*:617)'
+                    .'|newsfeed/([^/]++)(*:642)'
+                    .'|update/([^/]++)(*:665)'
                 .')'
             .')/?$}sD',
     ],
@@ -72,12 +92,22 @@ return [
         136 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        208 => [[['_route' => 'decline_request', '_controller' => 'App\\Controller\\AdminController::delete'], ['id'], null, null, false, true, null]],
-        230 => [[['_route' => 'details', '_controller' => 'App\\Controller\\AdminController::show'], ['id'], null, null, false, true, null]],
-        263 => [[['_route' => 'approve_request', '_controller' => 'App\\Controller\\AdminController::approve_request'], ['id'], null, null, false, true, null]],
-        286 => [[['_route' => 'update_request', '_controller' => 'App\\Controller\\AdminController::update_request'], ['id'], null, null, false, true, null]],
-        317 => [[['_route' => 'my_profile', '_controller' => 'App\\Controller\\UserController::show'], ['id'], null, null, false, true, null]],
-        340 => [
+        189 => [[['_route' => 'show_team', '_controller' => 'App\\Controller\\AdminController::showTeam'], ['id'], null, null, false, true, null]],
+        236 => [[['_route' => 'decline_request', '_controller' => 'App\\Controller\\AdminController::delete'], ['id'], null, null, false, true, null]],
+        258 => [[['_route' => 'details', '_controller' => 'App\\Controller\\AdminController::show'], ['id'], null, null, false, true, null]],
+        291 => [[['_route' => 'approve_request', '_controller' => 'App\\Controller\\AdminController::approve_request'], ['id'], null, null, false, true, null]],
+        314 => [[['_route' => 'update_request', '_controller' => 'App\\Controller\\AdminController::update_request'], ['id'], null, null, false, true, null]],
+        356 => [[['_route' => 'feedback', '_controller' => 'App\\Controller\\CommentController::feedback'], ['id'], null, null, false, true, null]],
+        391 => [[['_route' => 'remove_comment', '_controller' => 'App\\Controller\\CommentController::removeComment'], ['id'], null, null, false, true, null]],
+        418 => [[['_route' => 'add_comment', '_controller' => 'App\\Controller\\CommentController::addComment'], ['id'], null, null, false, true, null]],
+        454 => [[['_route' => 'export_comments', '_controller' => 'App\\Controller\\CommentController::exportAction'], ['id'], null, null, false, true, null]],
+        488 => [[['_route' => 'comments_by_manager', '_controller' => 'App\\Controller\\CommentController::comments_by_manager'], ['id'], null, null, false, true, null]],
+        525 => [[['_route' => 'team_details', '_controller' => 'App\\Controller\\TeamController::details'], ['id'], null, null, false, true, null]],
+        553 => [[['_route' => 'team_member_details', '_controller' => 'App\\Controller\\TeamController::team_member_details'], ['id'], null, null, false, true, null]],
+        586 => [[['_route' => 'add_team_member', '_controller' => 'App\\Controller\\TeamController::add_team_member'], ['id'], null, null, false, true, null]],
+        617 => [[['_route' => 'my_profile', '_controller' => 'App\\Controller\\UserController::show'], ['id'], null, null, false, true, null]],
+        642 => [[['_route' => 'newsfeed', '_controller' => 'App\\Controller\\UserController::newsfeed'], ['id'], null, null, false, true, null]],
+        665 => [
             [['_route' => 'update_user', '_controller' => 'App\\Controller\\UserController::update'], ['id'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

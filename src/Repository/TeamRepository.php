@@ -18,6 +18,52 @@ class TeamRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Team::class);
     }
+    
+
+    public function findAllTeams(){
+        $teams=$this->findAll();
+        return $teams;
+    }
+
+    public function myTeams($id , $role){
+        if($role=='manager'){
+            return $this->createQueryBuilder('team')
+                ->andWhere('team.managerId = :val')
+                ->setParameter('val', $id)
+                ->getQuery()
+                ->getResult()
+            ;
+        }else{
+            $conn = $this->getEntityManager()
+            ->getConnection();
+            $sql = "Select team.name, team.manager_id_id ,user.first_name, user.last_name from team
+            join team_user
+            join user
+            where team.id = team_user.team_id
+            and user.id=team.manager_id_id
+            and team_user.user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+            //dd($stmt->fetchAll());
+            return $stmt->fetchAll();
+        }
+    }
+    public function teamMemebers($id){
+        
+        $conn = $this->getEntityManager()
+        ->getConnection();
+        $sql = "Select * from user
+        join team_user
+        where user.id = team_user.user_id
+        and team_user.team_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        //dd($stmt->fetchAll());
+        return $stmt->fetchAll();
+
+    }
 
     // /**
     //  * @return Team[] Returns an array of Team objects

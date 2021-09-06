@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User; //just like we had models for Eloquent
 use App\Entity\Team; //just like we had models for Eloquent
+use App\Entity\User;
+use App\Form\TeamForm;
 use App\Repository\UserRepository;
 use App\Form\UserProfileForm;
+use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    
     private $userRepository;
-    public function __construct(UserRepository $userRepository)
+    private $teamRepository;
+    public function __construct(UserRepository $userRepository, TeamRepository $teamRepository)
     {
         $this->userRepository = $userRepository;
+        $this->teamRepository = $teamRepository;
     }
 
     /**
@@ -50,37 +55,67 @@ class AdminController extends AbstractController
         return $this->render('admin/users/all_users.html.twig', array('users' => $users));
     }
 
+
+
     /**
      * @Route("/admin/teams" , name="all_teams")
      * @Method({"GET"})
      */
     public function all_teams(): Response
-    {
-        $teams=$this->getDoctrine()->getRepository(Team::class)->findAll();        
-        return $this->render('admin/users/all_teams.html.twig', array('teams' => $teams));
+    {   
+        $teams=$this->getDoctrine()->getRepository(Team::class)->findAll();      
+        $all_teams = array();
+
+        
+        //dd($all_teams);
+        return $this->render('admin/users/all_teams.html.twig', ['teams' => $teams]);
+    }
+
+    /**
+     * @Route("/admin/team/{id}" , name="show_team")
+     * @Method({"GET"})
+     */
+    public function showTeam(Request $request , Team $team){
+        return $this->render('admin/teams/show_team.html.twig' , [
+            'team' => $team,
+        ]);
     }
 
     /**
      * @Route("/admin/teams/create" , name="create_team")
-     * @Method({"GET"})
+     * @Method({"GET" ,"POST"})
      */
-    public function create_team(): Response
+    public function create_team(Request $request): Response
     {
-        $users=$this->userRepository->findAllUsers();
-        $project_managers = [];
-        foreach($users as $user){
-            if(in_array("ROLE_PM", $user->getRoles())){
-                array_push($project_managers, $user);
-            }
+        $team = new Team();
+        $form = $this->createForm(TeamForm::class , $team);
+        $form->handleRequest($request);
+        if($request->isMethod('POST')){
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($team);
+            $entityManager->flush();
+
+            $team->addMemberId($form['memberId']->getData());
+            
+            $teams = $this->teamRepository->findAllTeams();
+            //dd('ok');
+            return $this->redirectToRoute('all_teams',array(
+                'teams' => $teams
+                ));
         }
-        return $this->render('admin/teams/create.html.twig' , array('project_managers' => $project_managers));
+         
+        return $this->render('admin/teams/create.html.twig' , array(
+            'form' =>$form->createView() 
+           // 'managers' => $project_managers
+        ));
     }
 
      /**
      * @Route("/request/decline_request/{id}" , name="decline_request")
      * Method({"POST"})
      */
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         
@@ -92,9 +127,7 @@ class AdminController extends AbstractController
             'notice',
             'Request Declined!'
         );
-        return $this->redirectToRoute('signup_requests',array(
-            'signup_requests' => $signup_requests,
-        ));
+        return $this->redirect($request->headers->get('referer'));
     }
 
      /**

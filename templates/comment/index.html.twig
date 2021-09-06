@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Comments {% endblock %}
+
+{# Body Starts Here #}
+{% block body %}
+    
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    <a href="/export-comments/{{managerId}}" class="btn btn-success btn-sm" >Export</a>
+
+    <table  class="table table-stripped col-md-12">
+        <thead>
+            <tr>
+                <th class="col-md-2">Comments</th>
+                <th class="col-md-2">Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+                <tr>
+                    <td>{{comment['content']}}</td>
+                    <td>
+                        <form name="submit" id="submit" action="/comment/add_feedback/{{comment['id']}}" method="post">
+
+                            <label for="one">+ve</label>
+                            <input type="radio" id="one" name="feedback" value="positive"  {% if comment['feedback']=='positive' %} checked {% endif %}/>
+                            <label for="two">-ve</label>
+                            <input type="radio" id="two" name="feedback" value="negative" {% if comment['feedback']=='negative' %} checked {% endif %}/>
+                            <label for="two">neu</label>
+                            <input type="radio" id="two" name="feedback" value="neutral" {% if comment['feedback']=='neutral' %} checked {% endif %} />
+
+                            <input class="btn btn-sm btn-success" name="submit" type="submit" value="Feedback" tabindex="4" />
+                        </form>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>    
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $( document ).ready(function() {
+            alert('oaskd');
+        });
+    </script>
+{% endblock %}
